@@ -1,4 +1,5 @@
 import loginMenu from "../pageObjects/login/loginMenu.cy";
+import { productPage } from "../pageObjects/products/productMenu.cy";
 import account from "../fixtures/account.json";
 
 describe('Successfully Login', () => {
@@ -7,8 +8,9 @@ describe('Successfully Login', () => {
         cy.visit('', 100000);
     })
 
-    it('Succesfully Login', () => {
+    it.only('Succesfully Login', () => {
         loginMenu.login(account.username.standart_user, account.password);
+        productPage.productTitle();
     })
 })
 
