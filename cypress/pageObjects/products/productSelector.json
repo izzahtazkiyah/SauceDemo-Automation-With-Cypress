@@ -1,0 +1,8 @@
+{
+    "productTitle"      : "//span[@class='title']",
+    "sortingFilter"     : ".product_sort_container",
+    "inventoryName"     : ".inventory_item_name ",
+    "inventoryPrice"    : ".inventory_item_price",
+    "inventoryImage"    : ".inventory_item_img",
+    "addCartButton"     : ".btn btn_primary btn_small btn_inventory"
+}

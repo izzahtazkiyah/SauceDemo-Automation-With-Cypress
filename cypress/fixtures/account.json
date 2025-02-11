@@ -1,6 +1,6 @@
 {
     "username" : {
-        "standart_user"             : "standart_user",
+        "standart_user"             : "standard_user",
         "locked_out_user"           : "locked_out_user",
         "problem_user"              : "problem_user",
         "perfomance_glitch_user"    : "perfomance_glitch_user",

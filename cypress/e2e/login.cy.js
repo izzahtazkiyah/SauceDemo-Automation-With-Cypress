@@ -1,5 +1,5 @@
 import loginMenu from "../pageObjects/login/loginMenu.cy";
-import account from "../fixtures/account.json"
+import account from "../fixtures/account.json";
 
 describe('Successfully Login', () => {
     beforeEach( () => {
