@@ -1,5 +1,6 @@
 {
     "usernameField" : "#user-name",
     "passwordField" : "#password",
-    "loginButton"   : "#login-button"
+    "loginButton"   : "#login-button",
+    "errorMessages" : ".error-message-container.error"
 }
