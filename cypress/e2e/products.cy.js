@@ -1,4 +1,4 @@
-import { sorting, viewDetail, addProductToCart } from "../pageObjects/products/productMenu.cy";
+import { sorting, viewDetail, addProductToCart, removeProductFromCart } from "../pageObjects/products/productMenu.cy";
 import loginMenu from "../pageObjects/login/loginMenu.cy";
 import account from "../fixtures/account.json";
 
@@ -52,17 +52,44 @@ describe('View Detail', () => {
 })
 
 describe('Add Product to Cart', () => {
-    const product1  = 'Sauce Labs Backpack'
-    const product2  = 'Sauce Labs Onesie'
-
+    const products = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
+    const removeProduct = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
     beforeEach( () => {
         cy.viewport(1280, 720);
         cy.visit('', 100000);
         loginMenu.login(account.username.standart_user, account.password);
     })
 
-    it.only('Add One Product to Cart from Product Page', () => {
-        addProductToCart.addOneProduct(product1);
-        addProductToCart.verifyButton(product1);
+    it('Add One Product to Cart from Product Page', () => {
+        addProductToCart.oneProduct(products[0]);
     })
+
+    it('Add Multiple Product to Cart from Product Page', () => {
+        addProductToCart.multipleProduct(products)
+    })
+
+    it('Remove One Product After Add One Product from Product Page', () => {
+        addProductToCart.oneProduct(products[0]);
+        removeProductFromCart.oneProduct(removeProduct[0]);
+    })
+
+    it('Remove One Product After Add Multiple Product from Product Page', () => {
+        addProductToCart.multipleProduct(products);
+        removeProductFromCart.oneProduct(removeProduct[0]);
+    })
+
+    it.only('Remove Multiple Product After Add Multiple Product from Product Page', () => {
+        addProductToCart.multipleProduct(products);
+        // removeProductFromCart.multipleProduct(removeProduct);
+        removeProductFromCart.oneProduct(removeProduct[0]);
+        removeProductFromCart.oneProduct(removeProduct[1]);
+        removeProductFromCart.oneProduct(removeProduct[2]);
+    }) 
+
+    it('Add Product After Remove', () => {
+        addProductToCart.oneProduct(products[0]);
+        removeProductFromCart.oneProduct(products[0]);
+        addProductToCart.oneProduct(products[1]);
+    })
+
 })

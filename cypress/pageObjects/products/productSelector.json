@@ -1,10 +1,12 @@
 {
     "productTitle"      : ".title",
     "sortingFilter"     : ".product_sort_container",
+    "inventoryItem"     : ".inventory_item",
     "inventoryName"     : ".inventory_item_name ",
     "inventoryPrice"    : ".inventory_item_price",
     "inventoryImage"    : ".inventory_item_img",
     "addCartButton"     : ".btn.btn_primary.btn_small.btn_inventory",
     "removeButton"      : ".btn.btn_secondary.btn_small.btn_inventory",
+    "numberOfProduct"   : ".shopping_cart_badge",
     "backButton"        : "#back-to-products"
 }

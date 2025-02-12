@@ -6,9 +6,6 @@ export class titlePage {
         cy.get(productSelector.productTitle).should('have.text', 'Products');
     }
 
-    // static cartPage()   {
-    //     cy.get(productSelector.productTitle).should('have.text', '');      
-    // }
 }
 
 export class sorting {
@@ -63,25 +60,140 @@ export class viewDetail {
 
     static backToHome(){
         cy.get(productSelector.backButton).click();
-        titlePage.productTitle();
+        titlePage.productPage();
     }
 }
 
 export class addProductToCart {
-    static addOneProduct (product) {
 
+    static oneProduct (product) {
+        numberOfShopingCart.cartBadgeStart();
         cy.contains(productSelector.inventoryName, product)
-            .parents(".inventory_item")
+            .parents(productSelector.inventoryItem)
             .find(productSelector.addCartButton)
             .should("be.visible").click();
+
+        //verify button Add to Cart -> Remove
+        this.verifyButton(product);
+        numberOfShopingCart.verifyCartBadgeAfterAdd();
     }
 
+    static multipleProduct(products) {
+
+        products.forEach((product) => {
+            numberOfShopingCart.cartBadgeStart();
+
+            cy.contains(productSelector.inventoryName, product)
+                .parents(productSelector.inventoryItem)
+                .find(productSelector.addCartButton)
+                .should("be.visible").click();
+            
+
+            //verify button Add to Cart -> Remove
+            this.verifyButton(product);
+            
+        });
+
+        numberOfShopingCart.verifyCartBadgeAfterAdd();
+            
+    }
+    
     static verifyButton (product) {
         cy.contains(productSelector.inventoryName, product)
-        .parents(".inventory_item")
+        .parents(productSelector.inventoryItem)
         .find(productSelector.removeButton)
         .should('contain', 'Remove');
     }
 }
 
-export default { titlePage , sorting, viewDetail };
+export class removeProductFromCart{
+    static oneProduct (product) {
+        numberOfShopingCart.cartBadgeStart();
+        cy.contains(productSelector.inventoryName, product)
+            .parents(productSelector.inventoryItem)
+            .find(productSelector.removeButton)
+            .should('be.visible').click();
+        this.verifyButton(product);
+        numberOfShopingCart.verifyCartBadgeAfterRemove();
+    }
+
+    static multipleProduct (products) {
+        products.forEach((product) => {
+            numberOfShopingCart.cartBadgeStart();
+            cy.contains(productSelector.inventoryName, product)
+                .parents(productSelector.inventoryItem)
+                .find(productSelector.removeButton)
+                .should('be.visible').click();
+        })
+        this.verifyButton(product);
+        numberOfShopingCart.verifyCartBadgeAfterRemove();
+    }
+
+    static verifyButton (product) {
+        cy.contains(productSelector.inventoryName, product)
+            .parents(productSelector.inventoryItem)
+            .find(productSelector.addCartButton)
+            .should('contain', 'Add to cart');
+    }
+}
+
+export class numberOfShopingCart {
+
+    static cartCountBefore = 0; // inisialisasi bahwa cartCountBefore = 0
+
+    static cartBadgeStart () {
+        cy.get('body').then(($body) => {
+            // Mencari informasi apakah productSelector.numberOfProduct ada
+            if($body.find(productSelector.numberOfProduct).length > 0) {
+                cy.get(productSelector.numberOfProduct).invoke('text').then((cartCountBefore) => {
+                    const count = parseInt(cartCountBefore) || 0;
+                    // this.cartCountBefore = parseInt(cartCountBefore) || 0;
+                    Cypress.env('cartCountBefore', count);
+                })
+            } else {
+                // Menentukan bahwa productSelector.numberOfProduct jika tidak ada di body, maka => 0
+                Cypress.env('cartCountBefore', 0);
+            }
+        })
+    }
+
+    static verifyCartBadgeAfterAdd () {
+        cy.get('body').then(($body) => {
+            if($body.find(productSelector.numberOfProduct).length > 0) {
+                cy.get(productSelector.numberOfProduct)
+                .should('be.visible')
+                .invoke('text')
+                .then((cartCountAfter) => {
+                    const countAfter = parseInt(cartCountAfter) || 0;
+                    const countBefore = Cypress.env('cartCountBefore') || 0;
+                    expect(countAfter).to.equal( countBefore + 1);
+                    Cypress.env('cartCountBefore', countAfter);
+                })
+            } else {
+                expect(Cypress.env('cartCountBefore')).to.equal(0);
+            }
+        })
+    }
+
+    static verifyCartBadgeAfterRemove () {
+        cy.get('body').then(($body) => {
+            if($body.find(productSelector.numberOfProduct).length > 0) {
+                cy.get(productSelector.numberOfProduct)
+                    .should('be.visible')
+                    .invoke('text')
+                    .then((cartCountAfterRemove) => {
+                    const countAfterRemove = parseInt(cartCountAfterRemove) || 0;
+                    const countBefore = Cypress.env('cartCountBefore') || 1;
+                    expect(countAfterRemove).to.equal(countBefore - 1);
+                    Cypress.env('carCountBefore', countAfterRemove);
+                })
+            } else {
+                cy.get(productSelector.numberOfProduct).should('not.exist');
+                Cypress.env('cartCountBefore', 0);
+            }
+        })
+        
+    }
+}
+
+export default { titlePage , sorting, viewDetail, addProductToCart, removeProductFromCart, numberOfShopingCart };
