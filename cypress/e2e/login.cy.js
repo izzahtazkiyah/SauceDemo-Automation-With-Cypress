@@ -1,5 +1,5 @@
 import loginMenu from "../pageObjects/login/loginMenu.cy";
-import { productPage } from "../pageObjects/products/productMenu.cy";
+import { titlePage } from "../pageObjects/products/productMenu.cy";
 import account from "../fixtures/account.json";
 
 describe('Successfully Login', () => {
@@ -10,7 +10,7 @@ describe('Successfully Login', () => {
 
     it.only('Succesfully Login', () => {
         loginMenu.login(account.username.standart_user, account.password);
-        productPage.productTitle();
+        titlePage.productPage();
     })
 })
 
