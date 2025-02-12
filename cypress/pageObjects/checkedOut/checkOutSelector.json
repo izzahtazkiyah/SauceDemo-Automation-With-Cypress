@@ -1,0 +1,14 @@
+{
+    "firstNameForm"     : "#first-name",
+    "lastNameForm"      : "#last-name",
+    "postalCodeForm"    : "#postal-code",
+    "cancelButton"      : "#cancel",
+    "continueButton"    : "#continue",
+    "errorMessage"      : ".error-message-container.error",
+    "shippingInfo"      : "div[data-test='shipping-info-value']",
+    "subTotal"          : ".summary_subtotal_label",
+    "paymentTotal"      : ".summary_total_label",
+    "finishButton"      : "#finish",
+    "completeInfo"      : ".complete-header",
+    "backToHomeButton"  : "#back-to-products"
+}

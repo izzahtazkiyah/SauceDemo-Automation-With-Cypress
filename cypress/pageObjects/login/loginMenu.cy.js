@@ -9,7 +9,7 @@ export class login {
 
     //valid login
     static login(username, password){
-        this.fillForm(username, password)
+        this.fillForm(username, password);
         cy.get(selectors.loginButton).click();
     }
 

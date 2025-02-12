@@ -1,9 +1,14 @@
 import productSelector from "./productSelector.json"
 
-export class productPage {
-    static productTitle() {
+export class titlePage {
+
+    static productPage() {
         cy.get(productSelector.productTitle).should('have.text', 'Products');
     }
+
+    // static cartPage()   {
+    //     cy.get(productSelector.productTitle).should('have.text', '');      
+    // }
 }
 
 export class sorting {
@@ -55,6 +60,28 @@ export class viewDetail {
 
         cy.get(productSelector.backButton).should('exist')
     }
+
+    static backToHome(){
+        cy.get(productSelector.backButton).click();
+        titlePage.productTitle();
+    }
 }
 
-export default { productPage , sorting, viewDetail };
+export class addProductToCart {
+    static addOneProduct (product) {
+
+        cy.contains(productSelector.inventoryName, product)
+            .parents(".inventory_item")
+            .find(productSelector.addCartButton)
+            .should("be.visible").click();
+    }
+
+    static verifyButton (product) {
+        cy.contains(productSelector.inventoryName, product)
+        .parents(".inventory_item")
+        .find(productSelector.removeButton)
+        .should('contain', 'Remove');
+    }
+}
+
+export default { titlePage , sorting, viewDetail };
