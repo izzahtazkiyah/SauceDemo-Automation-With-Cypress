@@ -91,7 +91,6 @@ export class addProductToCart {
 
             //verify button Add to Cart -> Remove
             this.verifyButton(product);
-            
         });
 
         numberOfShopingCart.verifyCartBadgeAfterAdd();

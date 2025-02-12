@@ -78,7 +78,7 @@ describe('Add Product to Cart', () => {
         removeProductFromCart.oneProduct(removeProduct[0]);
     })
 
-    it.only('Remove Multiple Product After Add Multiple Product from Product Page', () => {
+    it('Remove Multiple Product After Add Multiple Product from Product Page', () => {
         addProductToCart.multipleProduct(products);
         // removeProductFromCart.multipleProduct(removeProduct);
         removeProductFromCart.oneProduct(removeProduct[0]);
@@ -91,5 +91,4 @@ describe('Add Product to Cart', () => {
         removeProductFromCart.oneProduct(products[0]);
         addProductToCart.oneProduct(products[1]);
     })
-
 })
