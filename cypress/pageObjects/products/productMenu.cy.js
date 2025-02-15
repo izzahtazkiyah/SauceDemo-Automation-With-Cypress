@@ -48,14 +48,28 @@ export class sorting {
 }
 
 export class viewDetail {
-    static viewDetailProduct(byClick) {
-        if(byClick === 'productName') {
-            cy.get(productSelector.inventoryName).first().click();
-        } else {
-            cy.get(productSelector.inventoryImage).first().click();
-        }
 
-        cy.get(productSelector.backButton).should('exist')
+    static viewDetailProduct(product, byClick) {
+        cy.contains(productSelector.inventoryName, product)
+            .parents(productSelector.inventoryItem)
+            .then(($productItem) => {
+                if (byClick === 'productName'){
+                    cy.wrap($productItem)
+                    .find(productSelector.inventoryName)
+                    .should('be.visible')
+                    .click();
+                } else if (byClick === 'productImage') {
+                    cy.wrap($productItem)
+                    .find(productSelector.inventoryImage)
+                    .first()
+                    .should('be.visible')
+                    .click();
+                }
+
+                cy.get(productSelector.backButton).should('exist')
+                    
+            })
+
     }
 
     static backToHome(){
@@ -96,6 +110,14 @@ export class addProductToCart {
         numberOfShopingCart.verifyCartBadgeAfterAdd();
             
     }
+
+    static addProductFromDetail (product, byClick) {
+        numberOfShopingCart.cartBadgeStart();
+        viewDetail.viewDetailProduct(product, byClick);
+        cy.get(productSelector.addCartButtonView).should('be.visible').click();
+        cy.get(productSelector.removeButtonView).should('be.visible');
+        numberOfShopingCart.verifyCartBadgeAfterAdd();
+    }
     
     static verifyButton (product) {
         cy.contains(productSelector.inventoryName, product)
@@ -106,6 +128,7 @@ export class addProductToCart {
 }
 
 export class removeProductFromCart{
+
     static oneProduct (product) {
         numberOfShopingCart.cartBadgeStart();
         cy.contains(productSelector.inventoryName, product)
@@ -123,8 +146,17 @@ export class removeProductFromCart{
                 .parents(productSelector.inventoryItem)
                 .find(productSelector.removeButton)
                 .should('be.visible').click();
+            this.verifyButton(product);
         })
-        this.verifyButton(product);
+        
+        numberOfShopingCart.verifyCartBadgeAfterRemove();
+    }
+
+    static removeProductFromDetail () {
+        //numberOfShopingCart.cartBadgeStart();
+        //viewDetail.viewDetailProduct(product);
+        cy.get(productSelector.removeButtonView).should('be.visible').click();
+        cy.get(productSelector.addCartButtonView).should('be.visible');
         numberOfShopingCart.verifyCartBadgeAfterRemove();
     }
 

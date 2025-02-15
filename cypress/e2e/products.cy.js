@@ -2,6 +2,9 @@ import { sorting, viewDetail, addProductToCart, removeProductFromCart } from "..
 import loginMenu from "../pageObjects/login/loginMenu.cy";
 import account from "../fixtures/account.json";
 
+const products = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
+const removeProduct = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
+
 describe('Sorting Products', () => {
     beforeEach( () => {
         cy.viewport(1280, 720);
@@ -31,6 +34,7 @@ describe('Sorting Products', () => {
 })
 
 describe('View Detail', () => {
+    
     beforeEach( () => {
         cy.viewport(1280, 720);
         cy.visit('', 100000);
@@ -38,22 +42,21 @@ describe('View Detail', () => {
     })
 
     it('View Detail by Click Product Name', () => {
-        viewDetail.viewDetailProduct('productName');      
+        viewDetail.viewDetailProduct(products[0], 'productName');      
     })
 
     it('View Detail by Click Product Image', () => {
-        viewDetail.viewDetailProduct('productImage');
+        viewDetail.viewDetailProduct(products[1], 'productImage');
     })
 
     it('Back to Home Page', () => {
-        viewDetail.viewDetailProduct('productName');
+        viewDetail.viewDetailProduct(products[1], 'productName');
         viewDetail.backToHome();
     })
 })
 
 describe('Add Product to Cart', () => {
-    const products = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
-    const removeProduct = ['Sauce Labs Backpack', 'Sauce Labs Bike Light', 'Sauce Labs Bolt T-Shirt'];
+    
     beforeEach( () => {
         cy.viewport(1280, 720);
         cy.visit('', 100000);
@@ -61,7 +64,7 @@ describe('Add Product to Cart', () => {
     })
 
     it('Add One Product to Cart from Product Page', () => {
-        addProductToCart.oneProduct(products[0]);
+        addProductToCart.oneProduct(products[2]);
     })
 
     it('Add Multiple Product to Cart from Product Page', () => {
@@ -80,15 +83,26 @@ describe('Add Product to Cart', () => {
 
     it('Remove Multiple Product After Add Multiple Product from Product Page', () => {
         addProductToCart.multipleProduct(products);
-        // removeProductFromCart.multipleProduct(removeProduct);
-        removeProductFromCart.oneProduct(removeProduct[0]);
-        removeProductFromCart.oneProduct(removeProduct[1]);
-        removeProductFromCart.oneProduct(removeProduct[2]);
+        removeProductFromCart.multipleProduct(removeProduct);
     }) 
 
     it('Add Product After Remove', () => {
         addProductToCart.oneProduct(products[0]);
         removeProductFromCart.oneProduct(products[0]);
         addProductToCart.oneProduct(products[1]);
+    })
+
+    it('Add and Remove Product from Detail Product', () => {
+        addProductToCart.addProductFromDetail(products[0], 'productName');
+        removeProductFromCart.removeProductFromDetail();
+    })
+
+    it.only('Add Multiple Product from Detail Product', () => {
+        addProductToCart.addProductFromDetail(products[0], 'productName');
+        viewDetail.backToHome();
+        addProductToCart.addProductFromDetail(products[2], 'productImage');
+        viewDetail.backToHome();
+        viewDetail.viewDetailProduct(products[0], 'productName');
+        removeProductFromCart.removeProductFromDetail();
     })
 })

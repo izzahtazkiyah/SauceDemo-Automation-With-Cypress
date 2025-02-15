@@ -8,5 +8,7 @@
     "addCartButton"     : ".btn.btn_primary.btn_small.btn_inventory",
     "removeButton"      : ".btn.btn_secondary.btn_small.btn_inventory",
     "numberOfProduct"   : ".shopping_cart_badge",
-    "backButton"        : "#back-to-products"
+    "backButton"        : "#back-to-products",
+    "addCartButtonView" : "#add-to-cart",
+    "removeButtonView"  : "#remove"
 }
