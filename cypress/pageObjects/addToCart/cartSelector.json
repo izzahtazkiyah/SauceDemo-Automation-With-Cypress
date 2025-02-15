@@ -1,9 +1,11 @@
 {
     "cartIcon"              : ".shopping_cart_link",
+    "cartItem"              : ".cart_item",
+    "numberOfProduct"       : ".shopping_cart_badge",
     "informationPageTitle"  : ".title",
     "inventoryName"         : ".inventory_item_name ",
     "inventoryPrice"        : ".inventory_item_price",
-    "removeButton"          : "#remove-sauce-labs-backpack",
+    "removeButton"          : ".btn.btn_secondary.btn_small.cart_button",
     "continueShopping"      : "#continue-shopping",
     "checkoutButton"        : "#checkout"
 }
