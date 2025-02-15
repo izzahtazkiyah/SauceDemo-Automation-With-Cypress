@@ -97,7 +97,7 @@ describe('Add Product to Cart', () => {
         removeProductFromCart.removeProductFromDetail();
     })
 
-    it.only('Add Multiple Product from Detail Product', () => {
+    it('Add Multiple Product from Detail Product', () => {
         addProductToCart.addProductFromDetail(products[0], 'productName');
         viewDetail.backToHome();
         addProductToCart.addProductFromDetail(products[2], 'productImage');
